@@ -19,26 +19,31 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hmh0211.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="I am too vegetable.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="hmh0211&#39;s blog">
-<meta property="og:url" content="http://hmh0211.github.io/index.html">
+    <meta name="description" content="树状数组引入：我们想要知道 $a[1],a[2],\dots,a[7]$ 的和，应该怎么做？ 一种做法是算 $a[1]+a[2]+\dots+a[7]$，需要求 $7$ 个数的和。 但如果我们已知三个数 $A,B,C$，$A&#x3D;a[1]+\dots+a[4],B&#x3D;a[5]+a[6],C&#x3D;a[7]$，那么我们就可以直接 $A+B+C$ 求出来，只用求三个数的和。这就是树状数组的核心。 概念：将一段前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树状数组学习笔记">
+<meta property="og:url" content="http://hmh0211.github.io/2024/02/14/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="hmh0211&#39;s blog">
-<meta property="og:description" content="I am too vegetable.">
+<meta property="og:description" content="树状数组引入：我们想要知道 $a[1],a[2],\dots,a[7]$ 的和，应该怎么做？ 一种做法是算 $a[1]+a[2]+\dots+a[7]$，需要求 $7$ 个数的和。 但如果我们已知三个数 $A,B,C$，$A&#x3D;a[1]+\dots+a[4],B&#x3D;a[5]+a[6],C&#x3D;a[7]$，那么我们就可以直接 $A+B+C$ 求出来，只用求三个数的和。这就是树状数组的核心。 概念：将一段前">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/image_hosting/37vm248q.png">
+<meta property="og:image" content="https://oi-wiki.org/ds/images/fenwick.svg">
+<meta property="article:published_time" content="2024-02-14T14:47:30.000Z">
+<meta property="article:modified_time" content="2024-02-14T14:50:50.966Z">
 <meta property="article:author" content="hmh0211">
-<meta property="article:tag" content="hmh,hmh0211,hmh100211,胡珉豪">
+<meta property="article:tag" content="树状数组">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.luogu.com.cn/upload/image_hosting/37vm248q.png">
 
 
-<link rel="canonical" href="http://hmh0211.github.io/">
+<link rel="canonical" href="http://hmh0211.github.io/2024/02/14/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://hmh0211.github.io/2024/02/14/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"2024/02/14/树状数组学习笔记/","title":"树状数组学习笔记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>hmh0211's blog</title>
+<title>树状数组学习笔记 | hmh0211's blog</title>
   
 
 
@@ -71,7 +76,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">hmh0211's blog</h1>
+      <p class="site-title">hmh0211's blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">一个蒟蒻的个人博客</p>
@@ -125,7 +130,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -138,6 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">树状数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">引入：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">概念：</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -185,16 +191,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://hmh0211.github.io/2024/02/14/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -208,13 +215,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | hmh0211's blog">
+      <meta itemprop="name" content="树状数组学习笔记 | hmh0211's blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/14/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">树状数组学习笔记</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          树状数组学习笔记
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -242,6 +249,13 @@
     </span>
 
   
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
@@ -265,8 +279,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
 <h1 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h1><h2 id="引入："><a href="#引入：" class="headerlink" title="引入："></a>引入：</h2><p>我们想要知道 $a[1],a[2],\dots,a[7]$ 的和，应该怎么做？</p>
 <p>一种做法是算 $a[1]+a[2]+\dots+a[7]$，需要求 $7$ 个数的和。</p>
 <p>但如果我们已知三个数 $A,B,C$，$A=a[1]+\dots+a[4],B=a[5]+a[6],C=a[7]$，那么我们就可以直接 $A+B+C$ 求出来，只用求三个数的和。这就是树状数组的核心。</p>
@@ -346,7 +359,6 @@
 <p>以上就是树状数组基础，如有不对之处请指正。</p>
 <p>最后附上模板：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define N 500005</span><br><span class="line">int n,a[N],c[N];</span><br><span class="line">inline int lowbit(int x)&#123;</span><br><span class="line">	return x&amp;(-x);</span><br><span class="line">&#125;</span><br><span class="line">inline void add(int i,int k)&#123;</span><br><span class="line">    while(i&lt;=n)&#123;</span><br><span class="line">	    c[i]+=k;</span><br><span class="line">	    i+=lowbit(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">inline void build(int *a)&#123;</span><br><span class="line">    for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">        add(i,a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">inline int pre_sum(int i)&#123;</span><br><span class="line">	int sum=0;</span><br><span class="line">  	while(i&gt;=1)&#123;</span><br><span class="line">    	sum+=c[i];</span><br><span class="line">    	i-=lowbit(i);</span><br><span class="line">  	&#125;</span><br><span class="line">	return sum;</span><br><span class="line">&#125;</span><br><span class="line">inline int get_sum(int l, int r)&#123;</span><br><span class="line">	return pre_sum(r)-pre_sum(l-1);</span><br><span class="line">&#125;</span><br><span class="line">inline int query(int i)&#123;</span><br><span class="line">	int ans=c[i],lca=i-lowbit(i);</span><br><span class="line">	i--;</span><br><span class="line">	while(i!=lca)&#123;</span><br><span class="line">		ans=ans-c[i];</span><br><span class="line">		i-=lowbit(i);</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">    build(a);</span><br><span class="line">    </span><br><span class="line">  	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
@@ -354,323 +366,25 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag"># 树状数组</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hmh0211.github.io/2024/02/14/%E5%89%8D%E7%BC%80%E5%92%8C%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hmh0211">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hmh0211's blog">
-      <meta itemprop="description" content="I am too vegetable.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | hmh0211's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/14/%E5%89%8D%E7%BC%80%E5%92%8C%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">前缀和差分学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-02-14 22:36:34 / 修改时间：22:44:30" itemprop="dateCreated datePublished" datetime="2024-02-14T22:36:34+08:00">2024-02-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OI/" itemprop="url" rel="index"><span itemprop="name">OI</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OI/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OI/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">算法学习笔记</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前缀和-amp-差分"><a href="#前缀和-amp-差分" class="headerlink" title="前缀和&amp;差分"></a>前缀和&amp;差分</h1><h2 id="一维："><a href="#一维：" class="headerlink" title="一维："></a>一维：</h2><h3 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h3><pre><code>前缀和可以简单理解为「数列的前 n 项的和」。
-</code></pre>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/02/14/%E5%89%8D%E7%BC%80%E5%92%8C%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hmh0211.github.io/2024/02/14/%E5%9F%BA%E4%BA%8Ehexo%E5%92%8Cgithub%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hmh0211">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hmh0211's blog">
-      <meta itemprop="description" content="I am too vegetable.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | hmh0211's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/14/%E5%9F%BA%E4%BA%8Ehexo%E5%92%8Cgithub%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">如何零基础搭建一个基于Hexo+Next和Github的博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-02-14 20:48:28 / 修改时间：22:37:15" itemprop="dateCreated datePublished" datetime="2024-02-14T20:48:28+08:00">2024-02-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>刚搭完就来写教程了（<del>不然过段时间估计就又要鸽了</del>）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/02/14/%E5%9F%BA%E4%BA%8Ehexo%E5%92%8Cgithub%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/14/%E5%89%8D%E7%BC%80%E5%92%8C%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="前缀和差分学习笔记">
+                  <i class="fa fa-angle-left"></i> 前缀和差分学习笔记
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hmh0211.github.io/2024/02/14/%E5%8D%9A%E5%AE%A2%E7%BB%88%E4%BA%8E%E6%90%AD%E5%A5%BD%E5%95%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hmh0211">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hmh0211's blog">
-      <meta itemprop="description" content="I am too vegetable.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | hmh0211's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/14/%E5%8D%9A%E5%AE%A2%E7%BB%88%E4%BA%8E%E6%90%AD%E5%A5%BD%E5%95%A6/" class="post-title-link" itemprop="url">博客终于搭好啦</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-02-14 20:40:29 / 修改时间：22:24:59" itemprop="dateCreated datePublished" datetime="2024-02-14T20:40:29+08:00">2024-02-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>79</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>经过两天的<del>爆肝</del>瞎摸索，终于让我把博客给搭出来了（不容易啊）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/02/14/%E5%8D%9A%E5%AE%A2%E7%BB%88%E4%BA%8E%E6%90%AD%E5%A5%BD%E5%95%A6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+            <div class="post-nav-item">
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
+
 
 
 
