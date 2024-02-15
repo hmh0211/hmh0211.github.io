@@ -27,7 +27,7 @@
 <meta property="og:description" content="刚搭完就来写教程了（不然过段时间估计就又要鸽了）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-14T12:48:28.000Z">
-<meta property="article:modified_time" content="2024-02-14T14:37:15.061Z">
+<meta property="article:modified_time" content="2024-02-15T06:44:21.219Z">
 <meta property="article:author" content="hmh0211">
 <meta property="article:tag" content="blog">
 <meta name="twitter:card" content="summary">
@@ -227,9 +227,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-02-14 20:48:28 / 修改时间：22:37:15" itemprop="dateCreated datePublished" datetime="2024-02-14T20:48:28+08:00">2024-02-14</time>
+      <time title="创建时间：2024-02-14 20:48:28" itemprop="dateCreated datePublished" datetime="2024-02-14T20:48:28+08:00">2024-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-15 14:44:21" itemprop="dateModified" datetime="2024-02-15T14:44:21+08:00">2024-02-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -289,14 +295,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 <p>如果显示 <code>Hexo is running at http://localhost:4000.</code> 则说明配置成功，打开浏览器，在浏览器输入 <a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a> 即可进入你的初始默认博客。</p>
 <p>但这只是一个离线博客，也就是说只有你能看见，接下来我们就需要用 ssh 功能让博客对外开放。</p>
-<h2 id="上传-Github-仓库"><a href="#上传-Github-仓库" class="headerlink" title="上传 Github 仓库"></a>上传 Github 仓库</h2><h3 id="创建-Github-仓库"><a href="#创建-Github-仓库" class="headerlink" title="创建 Github 仓库"></a>创建 Github 仓库</h3><p>首先创建一个 Github 仓库，名称格式为 <code>你的 Github 用户名.github.io</code>，选择 public，勾选 add a README file。</p>
+<h2 id="上传-Github-仓库"><a href="#上传-Github-仓库" class="headerlink" title="上传 Github 仓库"></a>上传 Github 仓库</h2><h3 id="创建-Github-仓库"><a href="#创建-Github-仓库" class="headerlink" title="创建 Github 仓库"></a>创建 Github 仓库</h3><p>首先创建一个 Github 仓库，名称格式为 <code>你的 Github 用户名.github.io</code>，选择 <code>public</code>，勾选 <code>add a README file</code>。</p>
 <h3 id="配置-Github-的-SSH"><a href="#配置-Github-的-SSH" class="headerlink" title="配置 Github 的 SSH"></a>配置 Github 的 SSH</h3><p>回到 Git 窗口，输入：</p>
 <p>设置用户名和邮箱：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;你的 GitHub 的用户名&quot;</span><br><span class="line">git config --global user.email &quot;你的注册 GitHub 的邮箱&quot;</span><br></pre></td></tr></table></figure></p>
 <p>创建 ssh 密钥文件:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;Github 注册的邮箱地址&quot;</span><br></pre></td></tr></table></figure></p>
 <p>一直按回车，直到出现一个奇怪的图，找到 <code>C:\Users\你的用户名\.ssh\id_rsa.pub</code>，用记事本打开后把里面的东西<strong>完整</strong>复制下来。</p>
-<p>然后进入 Github，点击右上角头像，点击 Settings，点击左侧的 SSH and GPG keys，点击右上方的 New SSH key，这时候要填两个东西，Title 想填什么填什么，Key 把刚刚复制的粘贴进去。</p>
-<p>检测是否连接成功：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh git@github.com</span><br></pre></td></tr></table></figure><br>如果出现 Hi xxx! You’ve successfully authenticated… 的提示，就说明连接成功。</p>
-<h3 id="配置-config-yml-文件"><a href="#配置-config-yml-文件" class="headerlink" title="配置 _config.yml 文件"></a>配置 _config.yml 文件</h3><p>将 blog 中 _config.yml 最后一段</p>
+<p>然后进入 Github，点击右上角头像，点击 <code>Settings</code>，点击左侧的 <code>SSH and GPG keys</code>，点击右上方的 <code>New SSH key</code>，这时候要填两个东西，<code>Title</code> 想填什么填什么，<code>Key</code> 把刚刚复制的粘贴进去。</p>
+<p>检测是否连接成功：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh git@github.com</span><br></pre></td></tr></table></figure><br>如果出现 <code>Hi xxx! You&#39;ve successfully authenticated...</code> 的提示，就说明连接成功。</p>
+<h3 id="配置-config-yml-文件"><a href="#配置-config-yml-文件" class="headerlink" title="配置 _config.yml 文件"></a>配置 _config.yml 文件</h3><p>将 <code>blog</code> 文件夹中 <code>_config.yml</code> 最后一段</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="line">deploy: </span><br><span class="line">  type: &#x27;&#x27;</span><br></pre></td></tr></table></figure>
 <p>修改为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="line">deploy: </span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:用户名/用户名.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
