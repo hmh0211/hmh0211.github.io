@@ -44,4 +44,18 @@
         <tag>blog</tag>
       </tags>
   </entry>
+  <entry>
+    <title>博客终于搭好啦</title>
+    <url>/2024/02/14/%E5%8D%9A%E5%AE%A2%E7%BB%88%E4%BA%8E%E6%90%AD%E5%A5%BD%E5%95%A6/</url>
+    <content><![CDATA[<p>经过两天的<del>爆肝</del>瞎摸索，终于让我把博客给搭出来了（不容易啊）</p>
+<span id="more"></span>
+<p>后续有时间的话试试能不能写篇搭博客的教程，还有hexo插件，mathjax渲染之类的（<del>flag++</del>）</p>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
 </search>
