@@ -1281,7 +1281,7 @@ pre code {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #c19c32;
+  background: #ff1aff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2809,4 +2809,15 @@ header.header {
 }
 .main-inner {
   background: rgba(255,255,255,0.7);
+}
+a[href^="http"]:not([href*="https://hmh0211.github.io"])::after {
+  content: "↗";
+  display: inline-block;
+  font-size: 0.75em;
+  line-height: 1;
+  vertical-align: super;
+  margin-left: 0.15em;
+  text-decoration: none;
+  color: currentColor;
+  opacity: 0.85;
 }
